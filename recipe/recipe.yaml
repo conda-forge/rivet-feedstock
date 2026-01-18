@@ -44,7 +44,7 @@ requirements:
     - yoda <2
     - fastjet-contrib
     # DEBUG
-    - fastjet-cxx >=3.4.3,<3.5.1
+    - fastjet-cxx >=3.4.3,<3.5.0
     - cython
   run:
     - python
@@ -52,7 +52,7 @@ requirements:
     - yoda <2
     - fastjet-contrib
     # DEBUG
-    - fastjet-cxx >=3.4.3,<3.5.1
+    - fastjet-cxx >=3.4.3,<3.5.0
     - hdf5
     - highfive
     - matplotlib-base
