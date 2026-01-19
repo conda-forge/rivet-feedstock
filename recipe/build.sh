@@ -8,6 +8,15 @@ cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 autoreconf --install --force
 
+# Cross-compilation: pre-seed autoconf cache for file existence checks.
+# AC_CHECK_FILE cannot check for file existence when cross-compiling.
+# The configure script checks if pyext/rivet/core.cpp exists to determine
+# if Cython needs to regenerate it. Since Cython is available in the build
+# environment, the file will be generated during the build.
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
+    export ac_cv_file_pyext_rivet_core_cpp=no
+fi
+
 ./configure --help
 
 ./configure \
