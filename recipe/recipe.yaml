@@ -11,9 +11,6 @@ package:
 source:
   url: https://gitlab.com/hepcedar/rivet/-/archive/rivet-${{ version }}/rivet-rivet-${{ version }}.tar.gz
   sha256: 0007e8d60d2fe78deb4481d46f4a6a2f1b6595180cb93bbfebdbd5e32fc64c0a
-  patches:
-    # Fix HepMC3 version detection during cross-compilation
-    - cross-compile-hepmc3-version.patch
 
 build:
   number: 1
