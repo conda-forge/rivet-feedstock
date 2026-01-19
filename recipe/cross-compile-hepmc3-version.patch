@@ -1,0 +1,20 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -183,7 +183,16 @@ else
+   else
+     $CXX $CPPFLAGS conftest.cpp -o conftest 2>&1 1>&5
+   fi
+-  hepmc_version=`./conftest`
++  # When cross-compiling, we cannot run the conftest binary, so extract version from header
++  if test "$cross_compiling" = yes; then
++    # Extract version string from HepMC3/Version.h (e.g., "3.2.6")
++    hepmc_version=`grep -o 'return "[0-9.]*"' "$HEPMC3INCPATH/HepMC3/Version.h" | grep -o '[0-9.]*' | head -1`
++    if test "x$hepmc_version" = "x"; then
++      AC_MSG_ERROR([Could not determine HepMC3 version from header during cross-compilation])
++    fi
++  else
++    hepmc_version=`./conftest`
++  fi
+   if test x$hepmc_version != x; then
+     hepmc_major=[`echo "$hepmc_version" | cut -d. -f1 | sed -e 's/^0*//;s/\([0-9]*\).*/\1/g;s/^$/0/'`]
+     hepmc_minor=[`echo "$hepmc_version" | cut -d. -f2 | sed -e 's/^0*//;s/\([0-9]*\).*/\1/g;s/^$/0/'`]
