@@ -20,6 +20,7 @@ build:
     # FIXME: Make patch for distutils deprecation and backport YODA v1.9.11
     - match(python, ">3.11")
 
+# c.f. https://gitlab.com/hepcedar/rivetbootstrap/-/raw/3.1.11/rivet-bootstrap
 requirements:
   build:
     - if: build_platform != target_platform
