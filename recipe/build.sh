@@ -10,6 +10,7 @@ autoreconf --install --force
 
 ./configure --help
 
+echo "PYTHON: ${PYTHON}"
 ./configure \
     --prefix=$PREFIX \
     --enable-shared=yes \
@@ -19,8 +20,7 @@ autoreconf --install --force
     --with-hepmc3=$PREFIX \
     --with-fastjet=$PREFIX \
     --with-fjcontrib=$PREFIX \
-    --with-zlib=$PREFIX \
-    PYTHON=$PYTHON
+    --with-zlib=$PREFIX
 
 make --jobs="${CPU_COUNT}"
 
