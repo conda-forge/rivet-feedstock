@@ -21,7 +21,7 @@ source:
     - 0008-fix-Skip-Python-import-tests-when-building-in-conda.patch
 
 build:
-  number: 0
+  number: 1
   skip:
     - win
 
