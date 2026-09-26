@@ -27,10 +27,13 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.12.* *_cpython
 target_platform:
 - osx-64
 yoda:
 - '2.1'
+zip_keys:
+- - python
+  - channel_sources
 zlib:
 - '1'

@@ -28,5 +28,8 @@ target_platform:
 - linux-64
 yoda:
 - '2.1'
+zip_keys:
+- - python
+  - channel_sources
 zlib:
 - '1'

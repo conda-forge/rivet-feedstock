@@ -19,9 +19,15 @@ source:
     - 0006-fix-Drop-rpath-no-from-fastjet-config-invocation.patch
     - 0007-fix-Replace-possessive-quantifiers-in-make-plots-reg.patch
     - 0008-fix-Skip-Python-import-tests-when-building-in-conda.patch
+    # AX_PYTHON_DEVEL's final check links Py_Initialize() against -lpython3.X,
+    # an embedding check Rivet has no use for: the extension module resolves
+    # Python symbols at runtime and no build rule uses PYTHON_LIBS. CPython
+    # 3.15 no longer ships a shared libpython next to the headers, so that
+    # link test fails. Not yet submitted upstream.
+    - 0009-fix-Don-t-require-libpython-to-build-the-Python-exte.patch
 
 build:
-  number: 0
+  number: 1
   skip:
     - win
 
