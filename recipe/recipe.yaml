@@ -27,7 +27,7 @@ source:
     - 0009-fix-Don-t-require-libpython-to-build-the-Python-exte.patch
 
 build:
-  number: 1
+  number: 2
   skip:
     - win
 
@@ -67,6 +67,10 @@ requirements:
     # HepMC3>=3.3, so compiling an analysis against the installed headers
     # (e.g. with rivet-build) requires zlib.h at runtime
     - zlib
+    # rivet-build compiles analyses with the C++ compiler recorded at build
+    # time, which the minimally activated cxx-compiler provides at runtime
+    # c.f. https://github.com/conda-forge/rivet-feedstock/issues/19
+    - cxx-compiler
 
 tests:
   - package_contents:
@@ -128,10 +132,7 @@ tests:
         - rivet
       pip_check: false
 
-  - requirements:
-      run:
-        - cxx-compiler
-    files:
+  - files:
       source:
         - test/testBeams.cc
         - test/testCmp.cc
