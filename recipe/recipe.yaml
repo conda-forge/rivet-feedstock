@@ -27,7 +27,7 @@ source:
     - 0009-fix-Don-t-require-libpython-to-build-the-Python-exte.patch
 
 build:
-  number: 2
+  number: 3
   skip:
     - win
 
@@ -55,8 +55,8 @@ requirements:
     - python
     - hepmc3
     - yoda
-    - fastjet-contrib
-    - fastjet-cxx
+    - fastjet-contrib-devel
+    - fastjet-cxx-devel
     - cython
     - zlib
   run:
@@ -67,6 +67,11 @@ requirements:
     # HepMC3>=3.3, so compiling an analysis against the installed headers
     # (e.g. with rivet-build) requires zlib.h at runtime
     - zlib
+    # Rivet/Analysis.hh includes Rivet/Projections/FastJets.hh, which includes
+    # fastjet/ and fastjet/contrib/ headers, so rivet-build needs both -devel
+    # packages at runtime
+    - fastjet-cxx-devel
+    - fastjet-contrib-devel
     # rivet-build compiles analyses with the C++ compiler recorded at build
     # time, which the minimally activated cxx-compiler provides at runtime
     # c.f. https://github.com/conda-forge/rivet-feedstock/issues/19
