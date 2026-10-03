@@ -55,7 +55,9 @@ requirements:
     - python
     - hepmc3
     - yoda
+    - fastjet-contrib  # pick up global pinning
     - fastjet-contrib-devel
+    - fastjet-cxx  # pick up global pinning
     - fastjet-cxx-devel
     - cython
     - zlib
