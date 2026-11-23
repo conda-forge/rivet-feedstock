@@ -39,7 +39,7 @@ requirements:
     - automake
     - libtool
     - make
-    - pkg-config
+    - pkgconf
     - gnuconfig
     # Tools that autotools looks for
     - sed
