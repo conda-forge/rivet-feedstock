@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "4.1.4"
+  version: "4.1.5"
 
 package:
   name: rivet
@@ -9,25 +9,23 @@ package:
 
 source:
   url: https://gitlab.com/hepcedar/rivet/-/archive/rivet-${{ version }}/rivet-rivet-${{ version }}.tar.gz
-  sha256: 3bceaeec2b49161c02fa08bfa6e4c5fff64247afd0b639ad9d544521b047d002
+  sha256: 30de475ca9f04aac0bcc003ded26a2d72fe7dcdace0979e603bcdf6f16a747a2
   patches:
-    - 0001-fix-Fix-Python-extension-build-for-modern-Python-3.1.patch
-    - 0002-fix-Replace-shell-ls-with-make-wildcard-in-analyses-.patch
-    - 0003-fix-Use-C-linker-for-libRivet-convenience-library-ag.patch
-    - 0004-fix-Remove-install_name_tool-calls-and-WITH_OSX-cond.patch
-    - 0005-fix-Replace-AC_CHECK_FILE-with-shell-test-for-cross-.patch
-    - 0006-fix-Drop-rpath-no-from-fastjet-config-invocation.patch
-    - 0007-fix-Replace-possessive-quantifiers-in-make-plots-reg.patch
-    - 0008-fix-Skip-Python-import-tests-when-building-in-conda.patch
-    # AX_PYTHON_DEVEL's final check links Py_Initialize() against -lpython3.X,
-    # an embedding check Rivet has no use for: the extension module resolves
-    # Python symbols at runtime and no build rule uses PYTHON_LIBS. CPython
-    # 3.15 no longer ships a shared libpython next to the headers, so that
-    # link test fails. Not yet submitted upstream.
-    - 0009-fix-Don-t-require-libpython-to-build-the-Python-exte.patch
+    - fix-Fix-Python-extension-build-for-modern-Python-3.1.patch
+    - fix-Replace-shell-ls-with-make-wildcard-in-analyses-.patch
+    - fix-Use-C-linker-for-libRivet-convenience-library-ag.patch
+    - fix-Remove-install_name_tool-calls-and-WITH_OSX-cond.patch
+    - fix-Replace-AC_CHECK_FILE-with-shell-test-for-cross-.patch
+    - fix-Drop-rpath-no-from-fastjet-config-invocation.patch
+    - fix-Replace-possessive-quantifiers-in-make-plots-reg.patch
+    - fix-Skip-Python-import-tests-when-building-in-conda.patch
+    # Rivet 4.1.5's rivet-mkhtml passes deprecated=True to argparse's
+    # add_argument, which only exists in Python 3.13+, so the script fails at
+    # startup on older Pythons. Not yet submitted upstream.
+    - fix-Only-pass-argparse-deprecated-on-Python-3.13-and-newer.patch
 
 build:
-  number: 3
+  number: 0
   skip:
     - win
 
@@ -45,7 +43,7 @@ requirements:
     - automake
     - libtool
     - make
-    - pkg-config
+    - pkgconf
     - gnuconfig
     # Tools that autotools looks for
     - sed
@@ -97,6 +95,7 @@ tests:
         - rivet-mkhtml
         - rivet-mkhtml-tex
         - rivet-mkvaldir
+        - rivet-validate
       lib:
         - Rivet
       include:
@@ -130,6 +129,7 @@ tests:
       - rivet --help
       - make-plots --help
       - rivet-mkvaldir --help
+      - rivet-validate --help
       # Ensure no build machine paths leak into the compiler wrapper scripts
       - if grep -E 'build_env|prefix-map' "${CONDA_PREFIX}/bin/rivet-build"; then exit 1; fi
       - if grep -E 'build_env|prefix-map' "${CONDA_PREFIX}/bin/rivet-config"; then exit 1; fi

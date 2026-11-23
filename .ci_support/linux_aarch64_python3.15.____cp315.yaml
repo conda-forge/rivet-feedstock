@@ -1,3 +1,5 @@
+DOCKER_PLATFORM:
+- linux/aarch64
 c_stdlib:
 - sysroot
 c_stdlib_version:
@@ -23,13 +25,10 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.12.* *_cpython
+- 3.15.* *_cp315
 target_platform:
 - linux-aarch64
 yoda:
 - '2.1'
-zip_keys:
-- - python
-  - channel_sources
 zlib:
 - '1'
