@@ -91,6 +91,7 @@ tests:
         - rivet-mkhtml
         - rivet-mkhtml-tex
         - rivet-mkvaldir
+        - rivet-validate
       lib:
         - Rivet
       include:
@@ -124,6 +125,7 @@ tests:
       - rivet --help
       - make-plots --help
       - rivet-mkvaldir --help
+      - rivet-validate --help
       # Ensure no build machine paths leak into the compiler wrapper scripts
       - if grep -E 'build_env|prefix-map' "${CONDA_PREFIX}/bin/rivet-build"; then exit 1; fi
       - if grep -E 'build_env|prefix-map' "${CONDA_PREFIX}/bin/rivet-config"; then exit 1; fi
