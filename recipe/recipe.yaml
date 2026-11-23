@@ -19,6 +19,10 @@ source:
     - fix-Drop-rpath-no-from-fastjet-config-invocation.patch
     - fix-Replace-possessive-quantifiers-in-make-plots-reg.patch
     - fix-Skip-Python-import-tests-when-building-in-conda.patch
+    # Rivet 4.1.5's rivet-mkhtml passes deprecated=True to argparse's
+    # add_argument, which only exists in Python 3.13+, so the script fails at
+    # startup on older Pythons. Not yet submitted upstream.
+    - fix-Only-pass-argparse-deprecated-on-Python-3.13-and-newer.patch
 
 build:
   number: 0

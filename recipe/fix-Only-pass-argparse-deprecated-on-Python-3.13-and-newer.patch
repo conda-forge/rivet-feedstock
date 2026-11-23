@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Date: Mon, 23 Nov 2026 07:42:01 -0700
+Subject: [PATCH] fix: Only pass argparse deprecated= on Python 3.13 and newer
+
+Rivet 4.1.5 marks rivet-mkhtml's --ratiolabel option with
+add_argument(..., deprecated=True), but argparse only gained the
+deprecated keyword in Python 3.13. On older Pythons, which configure
+still accepts, rivet-mkhtml fails at startup with:
+
+    TypeError: _StoreAction.__init__() got an unexpected keyword argument 'deprecated'
+
+Pass deprecated=True only when the running Python supports it, so the
+option keeps working everywhere and still warns on Python 3.13+.
+
+cf. https://docs.python.org/3/library/argparse.html#deprecated
+---
+ bin/rivet-mkhtml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/bin/rivet-mkhtml b/bin/rivet-mkhtml
+index 3b36815..3ab5a9b 100755
+--- a/bin/rivet-mkhtml
++++ b/bin/rivet-mkhtml
+@@ -68,7 +68,9 @@ stygroup.add_argument("-t", "--title", dest="TITLE",
+                       default="Plots from Rivet analyses", help="title to be displayed on the main web page")
+ stygroup.add_argument("--reflabel", dest="REFLABEL",
+                       default="Data", help="legend entry for reference data")
+-stygroup.add_argument("--ratiolabel", dest="RATIOPLOTLABEL", deprecated=True,
++## argparse only accepts deprecated= from Python 3.13 onwards
++ratiolabel_kwargs = {"deprecated": True} if sys.version_info >= (3, 13) else {}
++stygroup.add_argument("--ratiolabel", dest="RATIOPLOTLABEL", **ratiolabel_kwargs,
+                       default=None, help="deprecated; set RatioPlotYLabel instead")
+ stygroup.add_argument("--deviation", dest="DEVIATION", action="store_true",
+                       default=False, help="rescale ratio panel to standard deviation (bin by bin)")
+-- 
+2.56.1
+
