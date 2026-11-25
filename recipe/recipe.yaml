@@ -21,11 +21,14 @@ source:
     - fix-Skip-Python-import-tests-when-building-in-conda.patch
     # Rivet 4.1.5's rivet-mkhtml passes deprecated=True to argparse's
     # add_argument, which only exists in Python 3.13+, so the script fails at
-    # startup on older Pythons. Not yet submitted upstream.
-    - fix-Only-pass-argparse-deprecated-on-Python-3.13-and-newer.patch
+    # startup on older Pythons. Use the bin/rivet-mkhtml part of upstream commit
+    # 3e6b86ee34313b6028d97d1ec50154d750738e94 from
+    # https://gitlab.com/hepcedar/rivet/-/merge_requests/1400.
+    # Remove after the next release.
+    - fix-rivet-mkhtml-crash-on-python-older-than-3.13.patch
 
 build:
-  number: 0
+  number: 1
   skip:
     - win
 
