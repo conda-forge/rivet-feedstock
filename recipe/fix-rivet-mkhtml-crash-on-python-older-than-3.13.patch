@@ -1,0 +1,36 @@
+From 3e6b86ee34313b6028d97d1ec50154d750738e94 Mon Sep 17 00:00:00 2001
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Date: Tue, 24 Nov 2026 15:10:45 -0600
+Subject: [PATCH] Fix rivet-mkhtml crash on Python older than 3.13
+
+---
+ bin/rivet-mkhtml | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/bin/rivet-mkhtml b/bin/rivet-mkhtml
+index 3b3681511..70889fb63 100755
+--- a/bin/rivet-mkhtml
++++ b/bin/rivet-mkhtml
+@@ -68,7 +68,7 @@ stygroup.add_argument("-t", "--title", dest="TITLE",
+                       default="Plots from Rivet analyses", help="title to be displayed on the main web page")
+ stygroup.add_argument("--reflabel", dest="REFLABEL",
+                       default="Data", help="legend entry for reference data")
+-stygroup.add_argument("--ratiolabel", dest="RATIOPLOTLABEL", deprecated=True,
++stygroup.add_argument("--ratiolabel", dest="RATIOPLOTLABEL",
+                       default=None, help="deprecated; set RatioPlotYLabel instead")
+ stygroup.add_argument("--deviation", dest="DEVIATION", action="store_true",
+                       default=False, help="rescale ratio panel to standard deviation (bin by bin)")
+@@ -589,6 +589,10 @@ if __name__ == '__main__':
+     ## Parse arguments
+     args = parser.parse_args()
+ 
++    ## Warn by hand, as argparse only supports add_argument(deprecated=True) from Python 3.13
++    if args.RATIOPLOTLABEL is not None:
++        print("Warning: --ratiolabel is deprecated; set RatioPlotYLabel instead", file=sys.stderr)
++
+     ## Generate executable python scripts
+     pyScripts = generateScripts(args)
+ 
+-- 
+GitLab
+
